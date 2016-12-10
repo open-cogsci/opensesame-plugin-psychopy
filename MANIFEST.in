@@ -1,0 +1,4 @@
+include opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim_large.png
+include opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim.png
+include opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim.py
+include opensesame_plugins/psychopy_gratingstim/info.yaml
