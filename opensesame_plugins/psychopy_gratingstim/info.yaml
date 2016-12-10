@@ -55,3 +55,8 @@ controls:
     type: line_edit
     info: Cycles per pixel
     var: sf
+-
+    label: Orientation
+    type: line_edit
+    info: In degrees of clockwise rotation from vertical
+    var: ori

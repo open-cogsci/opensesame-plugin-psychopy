@@ -38,6 +38,7 @@ class psychopy_gratingstim(item):
 		self.var.xsize = 100
 		self.var.ysize = 100
 		self.var.sf = 0.05
+		self.var.ori = 0
 		self.var.color = u'white'
 		self.var.contrast = 1
 		
@@ -80,6 +81,7 @@ class psychopy_gratingstim(item):
 				grating.sf = f(self.var.sf)
 				grating.tex = f(self.var.tex)
 				grating.mask = f(self.var.mask)
+				grating.ori = f(self.var.ori)
 			grating.draw()
 			alive = yield
 
