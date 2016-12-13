@@ -60,3 +60,20 @@ controls:
     type: line_edit
     info: In degrees of clockwise rotation from vertical
     var: ori
+-
+    label: Object name
+    type: line_edit
+    info: For Python script
+    var: objectname
+-
+    label: Drawing order
+    type: spinbox
+    info: Lowest values draw first
+    min_val: -10000
+    max_val: 10000
+    var: order
+-
+    label: Custom Python code
+    type: editor
+    syntax: true
+    var: script
