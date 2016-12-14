@@ -47,9 +47,12 @@ class psychopy_gratingstim(item):
 		
 	def winflip(self):
 		
-		for grating, order in self.experiment._gratingstim_queue:
-			grating.draw()
+		if not self.experiment._gratingstim_needflip:
+			return
+		for item in self.experiment._gratingstim_queue:
+			item._grating.draw()
 		self.experiment.window.flip()
+		self.experiment._gratingstim_needflip = False
 		
 	def coroutine(self, coroutines=None):
 		
@@ -64,19 +67,20 @@ class psychopy_gratingstim(item):
 				u'Have you selected the psychopy backend?')
 		self._grating = GratingStim(self.experiment.window)
 		# Make sure that the window is flipped after every cycle
-		if coroutines is not None and self.experiment.window.flip not in \
-			coroutines.post_cycle_functions:
+		if coroutines is not None and \
+			self.winflip not in coroutines.post_cycle_functions:
 			coroutines.post_cycle_functions.append(self.winflip)
+			self.experiment._gratingstim_needflip = False
 		# Add all gratings to the grating queue, which is drawn in order
 		# before the window flip. We sort the queue to control the drawing
 		# order/ depth/ z-index of the stimuli.
 		if not hasattr(self.experiment, u'_gratingstim_queue'):
 			self.experiment._gratingstim_queue = []
-		self.experiment._gratingstim_queue.append(
-			(self._grating, self.var.order) )
-		self.experiment._gratingstim_queue.sort(
-			key=lambda gratings: gratings[1])
-		# Register the grating in the Python workspace
+		if self not in self.experiment._gratingstim_queue:
+			self.experiment._gratingstim_queue.append(self)
+			self.experiment._gratingstim_queue.sort(
+				key=lambda item: item.var.order)
+		# Register the grating in the Python workspace		
 		self.python_workspace[self.var.objectname] = self._grating		
 		alive = True
 		last_update = None
@@ -126,6 +130,7 @@ class psychopy_gratingstim(item):
 					now - last_update >= self.var.framerate):
 				if script is not None:
 					self.python_workspace._exec(script)
+				self.experiment._gratingstim_needflip = True
 				last_update = now
 				self._grating.color = f(u'color')
 				self._grating.contrast = f(u'contrast')
@@ -134,11 +139,11 @@ class psychopy_gratingstim(item):
 				self._grating.sf = f(u'sf')
 				self._grating.tex = f(u'tex')
 				self._grating.mask = f(u'mask')
-				self._grating.ori = f(u'ori')
+				self._grating.ori = f(u'ori')				
 			alive = yield
 		# Remove the grating from the queue when done
-		self.experiment._gratingstim_queue.remove(
-			(self._grating, self.var.order) )
+		self.experiment._gratingstim_queue.remove(self)
+		self.experiment._gratingstim_needflip = True
 
 	def prepare(self):
 
