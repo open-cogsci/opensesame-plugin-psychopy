@@ -41,6 +41,7 @@ class psychopy_gratingstim(item):
 		self.var.ori = 0
 		self.var.color = u'white'
 		self.var.contrast = 1
+		self.var.opacity = 1
 		self.var.script = u''
 		self.var.objectname = u'gratingstim'
 		self.var.order = 0
@@ -102,6 +103,7 @@ class psychopy_gratingstim(item):
 			bytecode = {
 				u'color' : c(u'color'),
 				u'contrast' : c(u'contrast'),
+				u'opacity' : c(u'opacity'),
 				u'xpos' : c(u'xpos'),
 				u'ypos' : c(u'ypos'),
 				u'xsize' : c(u'xsize'),
@@ -118,7 +120,7 @@ class psychopy_gratingstim(item):
 			# the var store
 			f = lambda stm: self.var.get(stm)
 		# If a custom Python script is provided, it's byte-compiled
-		script = self.var.script.strip()
+		script = self.var.get(u'script', _eval=False).strip()
 		script = None if not script else self.python_workspace._compile(script)
 		yield # Preparation done
 			
@@ -134,6 +136,7 @@ class psychopy_gratingstim(item):
 				last_update = now
 				self._grating.color = f(u'color')
 				self._grating.contrast = f(u'contrast')
+				self._grating.opacity = f(u'opacity')
 				self._grating.pos = f(u'xpos'), f(u'ypos')
 				self._grating.size = f(u'xsize'), f(u'ysize')
 				self._grating.sf = f(u'sf')

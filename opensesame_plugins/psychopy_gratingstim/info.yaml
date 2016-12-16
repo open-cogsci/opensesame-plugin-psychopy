@@ -17,7 +17,7 @@ controls:
 -
     label: Color
     type: line_edit
-    info: A valid PsychoPy tex argument
+    info: A valid PsychoPy color argument
     var: color
 -
     label: Texture
@@ -50,6 +50,11 @@ controls:
     type: line_edit
     info: "0 is no contrast, 1 is full contrast"
     var: contrast
+-
+    label: Opacity
+    type: line_edit
+    info: "0 is fully transparent, 1 is fully opaque"
+    var: opacity
 -
     label: Spatial frequency
     type: line_edit
