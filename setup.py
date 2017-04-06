@@ -22,7 +22,7 @@ from setuptools import setup
 
 setup(
 	name='opensesame-plugin-psychopy',
-	version='0.4.0',
+	version='0.5.0',
 	description='PsychoPy plugins for OpenSesame',
 	author='Sebastiaan Mathot',
 	author_email='s.mathot@cogsci.nl',
@@ -44,6 +44,15 @@ setup(
 			'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim_large.png',
 			'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim.py',
 			'opensesame_plugins/psychopy_gratingstim/info.yaml',
+			]
+		),
+		('share/opensesame_plugins/psychopy_textstim',
+		[
+			'opensesame_plugins/psychopy_textstim/psychopy_textstim.png',
+			'opensesame_plugins/psychopy_textstim/psychopy_textstim_large.png',
+			'opensesame_plugins/psychopy_textstim/psychopy_basestim.py',
+			'opensesame_plugins/psychopy_textstim/psychopy_textstim.py',
+			'opensesame_plugins/psychopy_textstim/info.yaml',
 			]
 		)]
 	)

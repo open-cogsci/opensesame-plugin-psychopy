@@ -1,0 +1,74 @@
+category: Visual stimuli
+description: A PsychoPy TextStim, mainly for use with coroutines
+controls:
+-
+    label: Update every
+    type: spinbox
+    suffix: " ms"
+    info: "-1 = no updating"
+    min_val: -1
+    max_val: 10000
+    var: framerate
+-
+    label: Interpret values as
+    type: combobox
+    options: [python, opensesame]
+    var: interpretation
+-
+    label: Color
+    type: line_edit
+    info: A valid PsychoPy color argument
+    var: color
+-
+    label: Text
+    type: line_edit
+    var: text
+-
+    label: Font family
+    type: line_edit
+    var: font_family
+-
+    label: Font size
+    type: line_edit
+    var: font_size
+-
+    label: Horizontal position (x)
+    type: line_edit
+    var: xpos
+-
+    label: Vertical position (y)
+    type: line_edit
+    var: ypos
+    info: Positive is up!
+-
+    label: Contrast
+    type: line_edit
+    info: "0 is no contrast, 1 is full contrast"
+    var: contrast
+-
+    label: Opacity
+    type: line_edit
+    info: "0 is fully transparent, 1 is fully opaque"
+    var: opacity
+-
+    label: Orientation
+    type: line_edit
+    info: In degrees of clockwise rotation from vertical
+    var: ori
+-
+    label: Object name
+    type: line_edit
+    info: For Python script
+    var: objectname
+-
+    label: Drawing order
+    type: spinbox
+    info: Lowest values draw first
+    min_val: -10000
+    max_val: 10000
+    var: order
+-
+    label: Custom Python code
+    type: editor
+    syntax: true
+    var: script

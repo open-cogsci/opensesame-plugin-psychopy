@@ -22,143 +22,59 @@ from libopensesame.exceptions import osexception
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
+try:
+	from psychopy_basestim import psychopy_basestim
+except ImportError:
+	# If basestim cannot be loaded, then that's probably because it's located
+	# with the textstim.
+	import sys
+	import os
+	path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+		'psychopy_textstim')
+	if path not in sys.path:
+		sys.path.append(path)
+	from psychopy_basestim import psychopy_basestim
 
-class psychopy_gratingstim(item):
+
+class psychopy_gratingstim(psychopy_basestim):
 
 	description = u'A dynamic PsychoPy GratingStim for use with coroutines'
 
 	def reset(self):
 
-		self.var.framerate = -1
-		self.var.interpretation = u'opensesame'
+		psychopy_basestim.reset(self)
 		self.var.tex = u'sin'
 		self.var.mask = u'gauss'
-		self.var.xpos = 0
-		self.var.ypos = 0
 		self.var.xsize = 100
 		self.var.ysize = 100
 		self.var.sf = 0.05
-		self.var.ori = 0
-		self.var.color = u'white'
-		self.var.contrast = 1
-		self.var.opacity = 1
-		self.var.script = u''
 		self.var.objectname = u'gratingstim'
-		self.var.order = 0
 		
-	def winflip(self):
+	@property
+	def _stimclass(self):
 		
-		if not self.experiment._gratingstim_needflip:
-			return
-		for item in self.experiment._gratingstim_queue:
-			item._grating.draw()
-		self.experiment.window.flip()
-		self.experiment._gratingstim_needflip = False
+		from psychopy.visual import GratingStim
+		return GratingStim
 		
-	def coroutine(self, coroutines=None):
+	def _prepare_bytecode(self, c):
 		
-		try:
-			from psychopy.visual import GratingStim, Window
-		except ImportError as e:
-			raise osexception(u'Failed to import PsychoPy', exception=e)
-		# Check whether the PsychoPy window is available
-		if not hasattr(self.experiment, u'window') or \
-			not isinstance(self.experiment.window, Window):
-			raise osexception(u'No PsychoPy window available. '
-				u'Have you selected the psychopy backend?')
-		self._grating = GratingStim(self.experiment.window)
-		# Make sure that the window is flipped after every cycle
-		if coroutines is not None and \
-			self.winflip not in coroutines.post_cycle_functions:
-			coroutines.post_cycle_functions.append(self.winflip)
-			self.experiment._gratingstim_needflip = False
-		# Add all gratings to the grating queue, which is drawn in order
-		# before the window flip. We sort the queue to control the drawing
-		# order/ depth/ z-index of the stimuli.
-		if not hasattr(self.experiment, u'_gratingstim_queue'):
-			self.experiment._gratingstim_queue = []
-		if self not in self.experiment._gratingstim_queue:
-			self.experiment._gratingstim_queue.append(self)
-			self.experiment._gratingstim_queue.sort(
-				key=lambda item: item.var.order)
-		# Register the grating in the Python workspace		
-		self.python_workspace[self.var.objectname] = self._grating		
-		alive = True
-		last_update = None
-		# The function to evaluate values depends on whether they are
-		# Python-style values, which are evaluated in the workspace, or
-		# OpenSesame-style values, which are evaluated by the syntax module when
-		# the variable is retrieved.
-		if self.var.interpretation == u'python':
-			# A compile function that gets a statement, converts it to a str,
-			# and then byte-compiles it to a code object. We cannot use
-			# python_workspace._compile(), because this assumes exec statements.
-			c = lambda stm: compile(
-					(u'#-*- coding:%s -*-\n' % self.experiment.encoding + \
-				 	safe_decode(self.var.get(stm, _eval=False))) \
-					.encode(self.experiment.encoding),
-					u'<string>', u'eval')
-			# The compile function is then applied to all statements so that
-			# they are precompiled
-			bytecode = {
-				u'color' : c(u'color'),
-				u'contrast' : c(u'contrast'),
-				u'opacity' : c(u'opacity'),
-				u'xpos' : c(u'xpos'),
-				u'ypos' : c(u'ypos'),
-				u'xsize' : c(u'xsize'),
-				u'ysize' : c(u'ysize'),
-				u'sf' : c(u'sf'),
-				u'tex' : c(u'tex'),
-				u'mask' : c(u'mask'),
-				u'ori' : c(u'ori')
-				}
-			# And the evalutation function just evals the bytecode
-			f = lambda stm: self.python_workspace._eval(bytecode[stm])
-		else:
-			# If the statements are OpenSesame-style, all the work is done by
-			# the var store
-			f = lambda stm: self.var.get(stm)
-		# If a custom Python script is provided, it's byte-compiled
-		script = self.var.get(u'script', _eval=False).strip()
-		script = None if not script else self.python_workspace._compile(script)
-		yield # Preparation done
-			
-		# Run, PsychoPy, run!	
-		while alive:
-			now = self.clock.time()
-			if last_update is None or \
-					(self.var.framerate >= 0 and \
-					now - last_update >= self.var.framerate):
-				if script is not None:
-					self.python_workspace._exec(script)
-				self.experiment._gratingstim_needflip = True
-				last_update = now
-				self._grating.color = f(u'color')
-				self._grating.contrast = f(u'contrast')
-				self._grating.opacity = f(u'opacity')
-				self._grating.pos = f(u'xpos'), f(u'ypos')
-				self._grating.size = f(u'xsize'), f(u'ysize')
-				self._grating.sf = f(u'sf')
-				self._grating.tex = f(u'tex')
-				self._grating.mask = f(u'mask')
-				self._grating.ori = f(u'ori')				
-			alive = yield
-		# Remove the grating from the queue when done
-		self.experiment._gratingstim_queue.remove(self)
-		self.experiment._gratingstim_needflip = True
-
-	def prepare(self):
-
-		item.prepare(self)
-		self._coroutine = self.coroutine()
-		self._coroutine.next()
-
-	def run(self):
-
-		self._coroutine.send(False)
-		self._grating.draw()
-		self.experiment.window.flip()
+		bytecode = psychopy_basestim._prepare_bytecode(self, c)
+		bytecode.update({
+			u'xsize'	: c(u'xsize'),
+			u'ysize'	: c(u'ysize'),
+			u'sf'		: c(u'sf'),
+			u'tex'		: c(u'tex'),
+			u'mask'		: c(u'mask'),
+			})
+		return bytecode
+		
+	def _update_attributes(self, f):
+		
+		psychopy_basestim._update_attributes(self, f)
+		self._stim.size = f(u'xsize'), f(u'ysize')
+		self._stim.sf = f(u'sf')
+		self._stim.tex = f(u'tex')
+		self._stim.mask = f(u'mask')
 
 
 class qtpsychopy_gratingstim(psychopy_gratingstim, qtautoplugin):
