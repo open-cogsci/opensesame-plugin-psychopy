@@ -48,16 +48,17 @@ class psychopy_gratingstim(psychopy_basestim):
 		self.var.xsize = 100
 		self.var.ysize = 100
 		self.var.sf = 0.05
+		self.var.phase = 0
 		self.var.objectname = u'gratingstim'
-		
+
 	@property
 	def _stimclass(self):
-		
+
 		from psychopy.visual import GratingStim
 		return GratingStim
-		
+
 	def _prepare_bytecode(self, c):
-		
+
 		bytecode = psychopy_basestim._prepare_bytecode(self, c)
 		bytecode.update({
 			u'xsize'	: c(u'xsize'),
@@ -65,16 +66,18 @@ class psychopy_gratingstim(psychopy_basestim):
 			u'sf'		: c(u'sf'),
 			u'tex'		: c(u'tex'),
 			u'mask'		: c(u'mask'),
-			})
+			u'phase'	: c(u'phase')
+		})
 		return bytecode
-		
+
 	def _update_attributes(self, f):
-		
+
 		psychopy_basestim._update_attributes(self, f)
 		self._stim.size = f(u'xsize'), f(u'ysize')
 		self._stim.sf = f(u'sf')
 		self._stim.tex = f(u'tex')
 		self._stim.mask = f(u'mask')
+		self._stim.phase = f(u'phase')
 
 
 class qtpsychopy_gratingstim(psychopy_gratingstim, qtautoplugin):

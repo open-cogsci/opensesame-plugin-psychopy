@@ -66,6 +66,11 @@ controls:
     info: In degrees of clockwise rotation from vertical
     var: ori
 -
+    label: Phase
+    type: line_edit
+    info: Between 0 and 1
+    var: phase
+-
     label: Object name
     type: line_edit
     info: For Python script
