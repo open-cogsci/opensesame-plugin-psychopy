@@ -22,7 +22,7 @@ from setuptools import setup
 
 setup(
 	name='opensesame-plugin-psychopy',
-	version='0.5.0',
+	version='0.6.0',
 	description='PsychoPy plugins for OpenSesame',
 	author='Sebastiaan Mathot',
 	author_email='s.mathot@cogsci.nl',
