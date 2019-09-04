@@ -36,9 +36,9 @@ class psychopy_basestim(item):
 		self.var.opacity = 1
 		self.var.script = u''
 		self.var.order = 0
-		
+
 	def coroutine(self, coroutines=None):
-		
+
 		try:
 			from psychopy.visual import Window
 		except ImportError as e:
@@ -63,8 +63,8 @@ class psychopy_basestim(item):
 			self.experiment._psychopystim_queue.append(self)
 			self.experiment._psychopystim_queue.sort(
 				key=lambda item: item.var.order)
-		# Register the grating in the Python workspace		
-		self.python_workspace[self.var.objectname] = self._stim		
+		# Register the grating in the Python workspace
+		self.python_workspace[self.var.objectname] = self._stim
 		alive = True
 		last_update = None
 		# The function to evaluate values depends on whether they are
@@ -95,8 +95,8 @@ class psychopy_basestim(item):
 		script = None if not script else self.python_workspace._compile(script)
 		self.is_active = False
 		yield # Preparation done
-			
-		# Run, PsychoPy, run!	
+
+		# Run, PsychoPy, run!
 		self.is_active = True
 		while alive:
 			now = self.clock.time()
@@ -113,14 +113,14 @@ class psychopy_basestim(item):
 		self.experiment._psychopystim_queue.remove(self)
 		self.experiment._psychopystim_needflip = True
 		self.is_active = False
-		
+
 	@property
 	def _stimclass(self):
-		
+
 		raise NotImplementedError()
-		
+
 	def _prepare_bytecode(self, c):
-		
+
 		return {
 			u'color' 		: c(u'color'),
 			u'contrast' 	: c(u'contrast'),
@@ -128,18 +128,18 @@ class psychopy_basestim(item):
 			u'xpos' 		: c(u'xpos'),
 			u'ypos' 		: c(u'ypos'),
 			u'ori' 			: c(u'ori')
-			}		
-		
+			}
+
 	def _update_attributes(self, f):
-		
+
 		self._stim.color 		= f(u'color')
 		self._stim.contrast 	= f(u'contrast')
 		self._stim.opacity 		= f(u'opacity')
 		self._stim.pos 			= f(u'xpos'), f(u'ypos')
 		self._stim.ori 			= f(u'ori')
-		
+
 	def winflip(self):
-		
+
 		if not self.experiment._psychopystim_needflip:
 			return
 		for item_ in self.experiment._psychopystim_queue:
@@ -147,12 +147,12 @@ class psychopy_basestim(item):
 				item_._stim.draw()
 		self.experiment.window.flip()
 		self.experiment._psychopystim_needflip = False
-		
+
 	def prepare(self):
 
 		item.prepare(self)
 		self._coroutine = self.coroutine()
-		self._coroutine.next()
+		next(self._coroutine)
 
 	def run(self):
 
