@@ -1,6 +1,6 @@
 # PsychoPy plugins for OpenSesame
 
-Copyright (2016-2017) Sebastiaan Mathôt
+Copyright (2016-2022) Sebastiaan Mathôt
 
 
 ## Installation
@@ -20,7 +20,7 @@ pip.main(['install', 'psychopy-plugin-opensesame'])
 
 See also:
 
-- http://osdoc.cogsci.nl/3.1/manual/environment/
+- https://rapunzel.cogsci.nl/manual/environment/
 
 
 ## About
