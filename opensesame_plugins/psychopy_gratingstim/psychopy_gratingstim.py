@@ -23,66 +23,66 @@ from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
 try:
-	from psychopy_basestim import psychopy_basestim
+    from psychopy_basestim import psychopy_basestim
 except ImportError:
-	# If basestim cannot be loaded, then that's probably because it's located
-	# with the textstim.
-	import sys
-	import os
-	path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-		'psychopy_textstim')
-	if path not in sys.path:
-		sys.path.append(path)
-	from psychopy_basestim import psychopy_basestim
+    # If basestim cannot be loaded, then that's probably because it's located
+    # with the textstim.
+    import sys
+    import os
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+        'psychopy_textstim')
+    if path not in sys.path:
+        sys.path.append(path)
+    from psychopy_basestim import psychopy_basestim
 
 
 class psychopy_gratingstim(psychopy_basestim):
 
-	description = u'A dynamic PsychoPy GratingStim for use with coroutines'
+    description = u'A dynamic PsychoPy GratingStim for use with coroutines'
 
-	def reset(self):
+    def reset(self):
 
-		psychopy_basestim.reset(self)
-		self.var.tex = u'sin'
-		self.var.mask = u'gauss'
-		self.var.xsize = 100
-		self.var.ysize = 100
-		self.var.sf = 0.05
-		self.var.phase = 0
-		self.var.objectname = u'gratingstim'
+        psychopy_basestim.reset(self)
+        self.var.tex = u'sin'
+        self.var.mask = u'gauss'
+        self.var.xsize = 100
+        self.var.ysize = 100
+        self.var.sf = 0.05
+        self.var.phase = 0
+        self.var.objectname = u'gratingstim'
 
-	@property
-	def _stimclass(self):
+    @property
+    def _stimclass(self):
 
-		from psychopy.visual import GratingStim
-		return GratingStim
+        from psychopy.visual import GratingStim
+        return GratingStim
 
-	def _prepare_bytecode(self, c):
+    def _prepare_bytecode(self, c):
 
-		bytecode = psychopy_basestim._prepare_bytecode(self, c)
-		bytecode.update({
-			u'xsize'	: c(u'xsize'),
-			u'ysize'	: c(u'ysize'),
-			u'sf'		: c(u'sf'),
-			u'tex'		: c(u'tex'),
-			u'mask'		: c(u'mask'),
-			u'phase'	: c(u'phase')
-		})
-		return bytecode
+        bytecode = psychopy_basestim._prepare_bytecode(self, c)
+        bytecode.update({
+            u'xsize'	: c(u'xsize'),
+            u'ysize'	: c(u'ysize'),
+            u'sf'		: c(u'sf'),
+            u'tex'		: c(u'tex'),
+            u'mask'		: c(u'mask'),
+            u'phase'	: c(u'phase')
+        })
+        return bytecode
 
-	def _update_attributes(self, f):
+    def _update_attributes(self, f):
 
-		psychopy_basestim._update_attributes(self, f)
-		self._stim.size = f(u'xsize'), f(u'ysize')
-		self._stim.sf = f(u'sf')
-		self._stim.tex = f(u'tex')
-		self._stim.mask = f(u'mask')
-		self._stim.phase = f(u'phase')
+        psychopy_basestim._update_attributes(self, f)
+        self._stim.sf = f(u'sf')
+        self._stim.tex = f(u'tex')
+        self._stim.mask = f(u'mask')
+        self._stim.phase = f(u'phase')
+        self._stim.size = f(u'xsize'), f(u'ysize')
 
 
 class qtpsychopy_gratingstim(psychopy_gratingstim, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		psychopy_gratingstim.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        psychopy_gratingstim.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

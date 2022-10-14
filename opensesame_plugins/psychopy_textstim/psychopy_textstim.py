@@ -23,43 +23,43 @@ from psychopy_basestim import psychopy_basestim
 
 class psychopy_textstim(psychopy_basestim):
 
-	description = u'A dynamic PsychoPy TextStim for use with coroutines'
+    description = u'A dynamic PsychoPy TextStim for use with coroutines'
 
-	def reset(self):
+    def reset(self):
 
-		psychopy_basestim.reset(self)
-		self.var.text = u''
-		self.var.font_family = u'mono'
-		self.var.font_size = 18
-		self.var.objectname = 'textstim'
-		
-	@property
-	def _stimclass(self):
-		
-		from psychopy.visual import TextStim
-		return TextStim
-		
-	def _prepare_bytecode(self, c):
-		
-		bytecode = psychopy_basestim._prepare_bytecode(self, c)
-		bytecode.update({
-			u'text'			: c(u'text'),
-			u'font_family'	: c(u'font_family'),
-			u'font_size'	: c(u'font_size'),
-			})
-		return bytecode
-		
-	def _update_attributes(self, f):
-		
-		psychopy_basestim._update_attributes(self, f)
-		self._stim.text = f(u'text')
-		self._stim.font = f(u'font_family')
-		self._stim.height = f(u'font_size')
+        psychopy_basestim.reset(self)
+        self.var.text = u''
+        self.var.font_family = u'mono'
+        self.var.font_size = 18
+        self.var.objectname = 'textstim'
+        
+    @property
+    def _stimclass(self):
+        
+        from psychopy.visual import TextStim
+        return TextStim
+        
+    def _prepare_bytecode(self, c):
+        
+        bytecode = psychopy_basestim._prepare_bytecode(self, c)
+        bytecode.update({
+            u'text'			: c(u'text'),
+            u'font_family'	: c(u'font_family'),
+            u'font_size'	: c(u'font_size'),
+            })
+        return bytecode
+        
+    def _update_attributes(self, f):
+        
+        psychopy_basestim._update_attributes(self, f)
+        self._stim.text = f(u'text')
+        self._stim.font = f(u'font_family')
+        self._stim.height = f(u'font_size')
 
 
 class qtpsychopy_textstim(psychopy_textstim, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		psychopy_textstim.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        psychopy_textstim.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)
