@@ -17,42 +17,52 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with psychopy_gratingstim.  If not, see <http://www.gnu.org/licenses/>.
 """
-
+import os
 from setuptools import setup
 
+
+def get_readme():
+
+    if os.path.exists('readme.md'):
+        with open('readme.md') as fd:
+            return fd.read()
+    return 'No readme information'
+
+
 setup(
-	name='opensesame-plugin-psychopy',
-	version='0.6.0',
-	description='PsychoPy plugins for OpenSesame',
-	author='Sebastiaan Mathot',
-	author_email='s.mathot@cogsci.nl',
-	url='https://github.com/smathot/opensesame-plugin-psychopy',
-	# Classifiers used by PyPi if you upload the plugin there
-	classifiers=[
-		'Intended Audience :: Science/Research',
-		'Topic :: Scientific/Engineering',
-		'Environment :: MacOS X',
-		'Environment :: Win32 (MS Windows)',
-		'Environment :: X11 Applications',
-		'License :: OSI Approved :: Apache Software License',
-		'Programming Language :: Python :: 2',
-	],
-	data_files=[
-		('share/opensesame_plugins/psychopy_gratingstim',
-		[
-			'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim.png',
-			'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim_large.png',
-			'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim.py',
-			'opensesame_plugins/psychopy_gratingstim/info.yaml',
-			]
-		),
-		('share/opensesame_plugins/psychopy_textstim',
-		[
-			'opensesame_plugins/psychopy_textstim/psychopy_textstim.png',
-			'opensesame_plugins/psychopy_textstim/psychopy_textstim_large.png',
-			'opensesame_plugins/psychopy_textstim/psychopy_basestim.py',
-			'opensesame_plugins/psychopy_textstim/psychopy_textstim.py',
-			'opensesame_plugins/psychopy_textstim/info.yaml',
-			]
-		)]
-	)
+    name='opensesame-plugin-psychopy',
+    version='0.6.1',
+    description='PsychoPy plugins for OpenSesame',
+    long_description=get_readme(),
+    author='Sebastiaan Mathot',
+    author_email='s.mathot@cogsci.nl',
+    url='https://github.com/smathot/opensesame-plugin-psychopy',
+    # Classifiers used by PyPi if you upload the plugin there
+    classifiers=[
+        'Intended Audience :: Science/Research',
+        'Topic :: Scientific/Engineering',
+        'Environment :: MacOS X',
+        'Environment :: Win32 (MS Windows)',
+        'Environment :: X11 Applications',
+        'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python :: 2',
+    ],
+    data_files=[
+        ('share/opensesame_plugins/psychopy_gratingstim',
+        [
+            'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim.png',
+            'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim_large.png',
+            'opensesame_plugins/psychopy_gratingstim/psychopy_gratingstim.py',
+            'opensesame_plugins/psychopy_gratingstim/info.yaml',
+            ]
+        ),
+        ('share/opensesame_plugins/psychopy_textstim',
+        [
+            'opensesame_plugins/psychopy_textstim/psychopy_textstim.png',
+            'opensesame_plugins/psychopy_textstim/psychopy_textstim_large.png',
+            'opensesame_plugins/psychopy_textstim/psychopy_basestim.py',
+            'opensesame_plugins/psychopy_textstim/psychopy_textstim.py',
+            'opensesame_plugins/psychopy_textstim/info.yaml',
+            ]
+        )]
+    )
