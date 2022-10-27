@@ -31,7 +31,7 @@ def get_readme():
 
 setup(
     name='opensesame-plugin-psychopy',
-    version='0.6.1',
+    version='0.6.2',
     description='PsychoPy plugins for OpenSesame',
     long_description=get_readme(),
     author='Sebastiaan Mathot',
@@ -45,8 +45,9 @@ setup(
         'Environment :: Win32 (MS Windows)',
         'Environment :: X11 Applications',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
     ],
+    packages=[],
     data_files=[
         ('share/opensesame_plugins/psychopy_gratingstim',
         [
