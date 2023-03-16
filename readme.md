@@ -1,6 +1,6 @@
 # PsychoPy plugins for OpenSesame
 
-Copyright (2016-2022) Sebastiaan Mathôt
+Copyright (2016-2023) Sebastiaan Mathôt
 
 
 ## Installation
@@ -11,12 +11,6 @@ In a terminal:
 pip install psychopy-plugin-opensesame
 ~~~
 
-In the OpenSesame debug window:
-
-~~~
-import pip
-pip.main(['install', 'psychopy-plugin-opensesame'])
-~~~
 
 See also:
 

@@ -1,7 +1,4 @@
-# coding=utf-8
-
-"""
-This file is part of psychopy_textstim.
+"""This file is part of psychopy_textstim.
 
 psychopy_textstim is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,50 +13,36 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with psychopy_textstim.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
-from libqtopensesame.items.qtautoplugin import qtautoplugin
-from psychopy_basestim import psychopy_basestim
+from opensesame_plugins.psychopy.psychopy_textstim.psychopy_basestim import \
+    PsychopyBasestim
 
-class psychopy_textstim(psychopy_basestim):
 
-    description = u'A dynamic PsychoPy TextStim for use with coroutines'
+class PsychopyTextstim(PsychopyBasestim):
 
     def reset(self):
-
-        psychopy_basestim.reset(self)
-        self.var.text = u''
-        self.var.font_family = u'mono'
+        super().reset()
+        self.var.text = ''
+        self.var.font_family = 'mono'
         self.var.font_size = 18
         self.var.objectname = 'textstim'
         
     @property
     def _stimclass(self):
-        
         from psychopy.visual import TextStim
         return TextStim
         
     def _prepare_bytecode(self, c):
-        
-        bytecode = psychopy_basestim._prepare_bytecode(self, c)
+        bytecode = super()._prepare_bytecode(c)
         bytecode.update({
-            u'text'			: c(u'text'),
-            u'font_family'	: c(u'font_family'),
-            u'font_size'	: c(u'font_size'),
+            'text'			: c('text'),
+            'font_family'	: c('font_family'),
+            'font_size'	: c('font_size'),
             })
         return bytecode
         
     def _update_attributes(self, f):
-        
-        psychopy_basestim._update_attributes(self, f)
-        self._stim.text = f(u'text')
-        self._stim.font = f(u'font_family')
-        self._stim.height = f(u'font_size')
-
-
-class qtpsychopy_textstim(psychopy_textstim, qtautoplugin):
-
-    def __init__(self, name, experiment, script=None):
-
-        psychopy_textstim.__init__(self, name, experiment, script)
-        qtautoplugin.__init__(self, __file__)
+        super()._update_attributes(f)
+        self._stim.text = f('text')
+        self._stim.font = f('font_family')
+        self._stim.height = f('font_size')

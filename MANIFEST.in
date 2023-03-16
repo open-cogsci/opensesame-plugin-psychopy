@@ -1,9 +1,0 @@
-include opensesame_plugins/psychopy_textstim/psychopy_textstim_large.png
-include opensesame_plugins/psychopy_textstim/psychopy_textstim.png
-include opensesame_plugins/psychopy_textstim/psychopy_textstim.py
-include opensesame_plugins/psychopy_gratingstim/info.yaml
-include opensesame_plugins/psychopy_textstim/psychopy_textstim_large.png
-include opensesame_plugins/psychopy_textstim/psychopy_textstim.png
-include opensesame_plugins/psychopy_textstim/psychopy_basestim.py
-include opensesame_plugins/psychopy_textstim/psychopy_textstim.py
-include opensesame_plugins/psychopy_textstim/info.yaml
