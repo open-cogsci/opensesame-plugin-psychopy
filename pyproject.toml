@@ -14,7 +14,6 @@ repository = "https://github.com/open-cogsci/opensesame-plugin-psychopy"
 [tool.poetry.dependencies]
 python = ">= 3.7"
 opensesame-core = ">= 4.0.0a0"
-psychopy = "*"
 
 [build-system]
 requires = ["poetry-core"]
