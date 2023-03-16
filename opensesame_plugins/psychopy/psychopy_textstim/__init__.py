@@ -50,3 +50,7 @@ controls = [
    'type': 'editor',
    'syntax': True,
    'var': 'script'}]
+
+
+def supports(exp):
+    return exp.var.canvas_backend == 'psycho'
