@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TS version="2.1">
+<context>
+    <name>plugin_psychopy_textstim</name>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="3" />
+        <source>Opacity</source>
+        <translation>अपारदर्शिता</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="4" />
+        <source>Drawing order</source>
+        <translation>चित्रण क्रम</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="5" />
+        <source>Custom Python code</source>
+        <translation>कस्टम पायथन कोड</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="6" />
+        <source>A valid PsychoPy color argument</source>
+        <translation>मान्य PsychoPy रंग तर्क</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="7" />
+        <source>Vertical position (y)</source>
+        <translation>खड़ा स्थिति (y)</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="8" />
+        <source>Interpret values as</source>
+        <translation>मानों को व्याख्या करें जैसे</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="9" />
+        <source>Positive is up!</source>
+        <translation>सकारात्मक ऊपर है!</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="10" />
+        <source>Font size</source>
+        <translation>फ़ॉन्ट का आकार</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="11" />
+        <source>-1 = no updating</source>
+        <translation>-1 = कोई अपडेट नहीं</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="12" />
+        <source>0 is fully transparent, 1 is fully opaque</source>
+        <translation>0 पूरी तरह पारदर्शी है, 1 पूरी तरह अपारदर्शी है</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="13" />
+        <source>Font family</source>
+        <translation>फ़ॉन्ट परिवार</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="14" />
+        <source>Visual stimuli</source>
+        <translation>दृश्य प्रेरणा</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="15" />
+        <source>A PsychoPy TextStim, mainly for use with coroutines</source>
+        <translation>PsychoPy का TextStim, मुख्य रूप से coroutines के साथ उपयोग के लिए</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="16" />
+        <source>0 is no contrast, 1 is full contrast</source>
+        <translation>0 का अर्थ है बिना कंट्रास्ट, 1 का अर्थ है पूर्ण कंट्रास्ट</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="17" />
+        <source>Lowest values draw first</source>
+        <translation>सबसे कम मूल्य पहले खींचे जाते हैं</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="18" />
+        <source>Text</source>
+        <translation>पाठ</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="19" />
+        <source> ms</source>
+        <translation> मिलिसेकेंड</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="20" />
+        <source>Color</source>
+        <translation>रंग</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="21" />
+        <source>In degrees of clockwise rotation from vertical</source>
+        <translation>सीधे से घड़ी की दिशा में घुमाने के डिग्री में</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="22" />
+        <source>Object name</source>
+        <translation>वस्तु का नाम</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="23" />
+        <source>For Python script</source>
+        <translation>पायथन स्क्रिप्ट के लिए</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="24" />
+        <source>Update every</source>
+        <translation>हर अपडेट करें</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="25" />
+        <source>Contrast</source>
+        <translation>कंट्रास्ट</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="26" />
+        <source>Horizontal position (x)</source>
+        <translation>क्षैतिज स्थिति (x)</translation>
+    </message>
+    <message>
+        <location filename="../../../../translation_tools/translatables.py" line="27" />
+        <source>Orientation</source>
+        <translation>अभिसंस्थापन</translation>
+    </message>
+</context>
+</TS>
