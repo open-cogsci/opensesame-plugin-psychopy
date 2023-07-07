@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "opensesame-plugin-psychopy"
-version = "0.7.1"
+version = "0.8.0"
 description = "PsychoPy plugins for OpenSesame"
 authors = ["Sebastiaan Mathôt <s.mathot@cogsci.nl>"]
 readme = "readme.md"
@@ -13,6 +13,7 @@ repository = "https://github.com/open-cogsci/opensesame-plugin-psychopy"
 
 [tool.poetry.dependencies]
 python = ">= 3.7"
+opensesame-core = ">3.99.99"
 
 [build-system]
 requires = ["poetry-core"]
