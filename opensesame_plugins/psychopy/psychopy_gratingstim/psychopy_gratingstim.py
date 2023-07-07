@@ -36,7 +36,7 @@ class PsychopyGratingstim(PsychopyBasestim):
         return GratingStim
 
     def _prepare_bytecode(self, c):
-        bytecode = super()._prepare_bytecode(self, c)
+        bytecode = super()._prepare_bytecode(c)
         bytecode.update({
             'xsize': c('xsize'),
             'ysize': c('ysize'),
