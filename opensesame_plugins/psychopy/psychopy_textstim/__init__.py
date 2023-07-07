@@ -1,5 +1,6 @@
+"""A PsychoPy TextStim, mainly for use with coroutines"""
+
 category = 'Visual stimuli'
-description = 'A PsychoPy TextStim, mainly for use with coroutines'
 controls = [
   {'label': 'Update every',
    'type': 'spinbox',
