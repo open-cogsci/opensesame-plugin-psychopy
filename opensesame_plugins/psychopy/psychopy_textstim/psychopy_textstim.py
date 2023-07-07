@@ -22,8 +22,8 @@ class PsychopyTextstim(PsychopyBasestim):
 
     def reset(self):
         super().reset()
-        self.var.text = ''
-        self.var.font_family = 'mono'
+        self.var.text = "'text'"
+        self.var.font_family = "'mono'"
         self.var.font_size = 18
         self.var.objectname = 'textstim'
         
@@ -35,9 +35,9 @@ class PsychopyTextstim(PsychopyBasestim):
     def _prepare_bytecode(self, c):
         bytecode = super()._prepare_bytecode(c)
         bytecode.update({
-            'text'			: c('text'),
-            'font_family'	: c('font_family'),
-            'font_size'	: c('font_size'),
+            'text': c('text'),
+            'font_family': c('font_family'),
+            'font_size': c('font_size'),
             })
         return bytecode
         

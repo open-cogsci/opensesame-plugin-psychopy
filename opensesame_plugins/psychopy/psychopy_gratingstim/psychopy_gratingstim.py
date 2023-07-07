@@ -22,13 +22,13 @@ class PsychopyGratingstim(PsychopyBasestim):
 
     def reset(self):
         super().reset()
-        self.var.tex = u'sin'
-        self.var.mask = u'gauss'
+        self.var.tex = "'sin'"
+        self.var.mask = "'gauss'"
         self.var.xsize = 100
         self.var.ysize = 100
         self.var.sf = 0.05
         self.var.phase = 0
-        self.var.objectname = u'gratingstim'
+        self.var.objectname = 'gratingstim'
 
     @property
     def _stimclass(self):
@@ -36,21 +36,21 @@ class PsychopyGratingstim(PsychopyBasestim):
         return GratingStim
 
     def _prepare_bytecode(self, c):
-        bytecode = psychopy_basestim._prepare_bytecode(self, c)
+        bytecode = super()._prepare_bytecode(self, c)
         bytecode.update({
-            u'xsize': c(u'xsize'),
-            u'ysize': c(u'ysize'),
-            u'sf': c(u'sf'),
-            u'tex': c(u'tex'),
-            u'mask': c(u'mask'),
-            u'phase': c(u'phase')
+            'xsize': c('xsize'),
+            'ysize': c('ysize'),
+            'sf': c('sf'),
+            'tex': c('tex'),
+            'mask': c('mask'),
+            'phase': c('phase')
         })
         return bytecode
 
     def _update_attributes(self, f):
         super()._update_attributes(f)
-        self._stim.sf = f(u'sf')
-        self._stim.tex = f(u'tex')
-        self._stim.mask = f(u'mask')
-        self._stim.phase = f(u'phase')
-        self._stim.size = f(u'xsize'), f(u'ysize')
+        self._stim.sf = f('sf')
+        self._stim.tex = f('tex')
+        self._stim.mask = f('mask')
+        self._stim.phase = f('phase')
+        self._stim.size = f('xsize'), f('ysize')

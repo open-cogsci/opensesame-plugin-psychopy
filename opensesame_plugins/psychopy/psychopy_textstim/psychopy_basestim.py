@@ -14,7 +14,8 @@ You should have received a copy of the GNU General Public License
 along with psychopy_textstim.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import MissingDependency, OSException
+from libopensesame.exceptions import MissingDependency, OSException, \
+    PythonSyntaxError, PythonError
 from libopensesame.item import Item
 
 
@@ -22,14 +23,14 @@ class PsychopyBasestim(Item):
 
     def reset(self):
         self.var.framerate = -1
-        self.var.interpretation = u'opensesame'
+        self.var.interpretation = 'python'
         self.var.xpos = 0
         self.var.ypos = 0
         self.var.ori = 0
-        self.var.color = u'white'
+        self.var.color = "'white'"
         self.var.contrast = 1
         self.var.opacity = 1
-        self.var.script = u''
+        self.var.script = ''
         self.var.order = 0
 
     def coroutine(self, coroutines=None):
@@ -38,7 +39,7 @@ class PsychopyBasestim(Item):
         except ImportError as e:
             raise MissingDependency('Failed to import PsychoPy')
         # Check whether the PsychoPy window is available
-        if not hasattr(self.experiment, u'window') or \
+        if not hasattr(self.experiment, 'window') or \
                 not isinstance(self.experiment.window, Window):
             raise OSException('No PsychoPy window available. Have you '
                               'selected the psychopy backend?')
@@ -51,7 +52,7 @@ class PsychopyBasestim(Item):
         # Add all gratings to the grating queue, which is drawn in order
         # before the window flip. We sort the queue to control the drawing
         # order/ depth/ z-index of the stimuli.
-        if not hasattr(self.experiment, u'_psychopystim_queue'):
+        if not hasattr(self.experiment, '_psychopystim_queue'):
             self.experiment._psychopystim_queue = []
         if self not in self.experiment._psychopystim_queue:
             self.experiment._psychopystim_queue.append(self)
@@ -65,28 +66,36 @@ class PsychopyBasestim(Item):
         # Python-style values, which are evaluated in the workspace, or
         # OpenSesame-style values, which are evaluated by the syntax module
         # when the variable is retrieved.
-        if self.var.interpretation == u'python':
+        if self.var.interpretation == 'python':
             # A compile function that gets a statement, converts it to a str,
             # and then byte-compiles it to a code object. We cannot use
             # python_workspace._compile(), because this assumes exec
             # statements.
-            def c(stm): return compile(
-                (u'#-*- coding:%s -*-\n' % self.experiment.encoding +
-                 safe_decode(self.var.get(stm, _eval=False)))
-                .encode(self.experiment.encoding),
-                u'<string>', u'eval')
+            def c(stm):
+                script = safe_decode(self.var.get(stm, _eval=False))
+                try:
+                    return compile(script, '<string>', 'eval')  # __ignore_traceback__
+                except SyntaxError as e:
+                    raise PythonSyntaxError(
+                        f'Syntax error in Python expression',
+                        line_nr=e.lineno)
             # The compile function is then applied to all statements so that
             # they are precompiled. This is done in another function so that it
             # can be overridden.
             bytecode = self._prepare_bytecode(c)
             # And the evalutation function just evals the bytecode
-            def f(stm): return self.python_workspace._eval(bytecode[stm])
+            def f(stm):
+                try:
+                    return self.python_workspace._eval(bytecode[stm])
+                except Exception as e:
+                    raise PythonError(
+                        'Error while evaluating Python expression')
         else:
             # If the statements are OpenSesame-style, all the work is done by
             # the var store
             def f(stm): return self.var.get(stm)
         # If a custom Python script is provided, it's byte-compiled
-        script = self.var.get(u'script', _eval=False).strip()
+        script = self.var.get('script', _eval=False).strip()
         script = None if not script else self.python_workspace._compile(script)
         self.is_active = False
         yield  # Preparation done
@@ -115,20 +124,20 @@ class PsychopyBasestim(Item):
 
     def _prepare_bytecode(self, c):
         return {
-            u'color': c(u'color'),
-            u'contrast': c(u'contrast'),
-            u'opacity': c(u'opacity'),
-            u'xpos': c(u'xpos'),
-            u'ypos': c(u'ypos'),
-            u'ori': c(u'ori')
+            'color': c('color'),
+            'contrast': c('contrast'),
+            'opacity': c('opacity'),
+            'xpos': c('xpos'),
+            'ypos': c('ypos'),
+            'ori': c('ori')
         }
 
     def _update_attributes(self, f):
-        self._stim.color = f(u'color')
-        self._stim.contrast = f(u'contrast')
-        self._stim.opacity = f(u'opacity')
-        self._stim.pos = f(u'xpos'), f(u'ypos')
-        self._stim.ori = f(u'ori')
+        self._stim.color = f('color')
+        self._stim.contrast = f('contrast')
+        self._stim.opacity = f('opacity')
+        self._stim.pos = f('xpos'), f('ypos')
+        self._stim.ori = f('ori')
 
     def winflip(self):
         if not self.experiment._psychopystim_needflip:
